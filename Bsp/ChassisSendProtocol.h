@@ -1,10 +1,7 @@
 #ifndef CHASSIS_SEND_PROTOCAL_H
 #define CHASSIS_SEND_PROTOCAL_H
 
-#include "string.h"
 #include "struct_typedef.h"
-#include "RefereeBehaviour.h"
-
 
 typedef __PACKED_STRUCT
 {

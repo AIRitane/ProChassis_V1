@@ -30,6 +30,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	{
 		switch(rx_header.StdId)
 		{
+			case CMSRecceiveID:
+				ERROR_COUNTER.CAN_CMS_Counter++;
+				CMS.enable = rx_data[0];
+				CMS.Electricity = (int16_t)rx_data[1]<<8|rx_data[2];
+				break;
 			case CanMotor1Id:
 			case CanMotor2Id:
 			case CanMotor3Id:
@@ -39,12 +44,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				i = rx_header.StdId - CanMotor1Id;
 				get_motor_measure(&ChassisMotor[i], rx_data);
 				
+				ERROR_COUNTER.CAN_MOTOR_Counter[i]++;
 				break;
 			}
 			default:
 			{
-				//闪紫色代表CAN线接错或者有未知ID
-				aRGB_led_show(0xFFBF16F0);
 				break;
 			}
 		}
@@ -59,11 +63,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			{
 				get_motor_measure(&YawMotor, rx_data);
 				
+				ERROR_COUNTER.CAN_MOTOR_Counter[4]++;
 				break;
 			}
 			/*-------------------------------------云台数据下发接收-------------------------------------*/
 			case DefaultAimStatusAndTargetId:
 			{
+				ERROR_COUNTER.CAN_GIMBLE_Counter++;
 				memcpy(&Aim,rx_data,sizeof(Aim_t));
 				break;
 			}
@@ -73,6 +79,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			}
 			case DefaulPTZRequestAndStatusId:
 			{
+				ERROR_COUNTER.CAN_GIMBLE_Counter++;
 				memcpy(&PTZ,rx_data,sizeof(PTZ_t));
 				break;
 			}
@@ -82,7 +89,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			}
 			default:
 			{
-				//考虑到CAN2总线上还有其他设备，不进行亮灯检测
 				break;
 			}
 		}

@@ -84,7 +84,7 @@ void referee_data_solve(uint8_t *frame)
         case GAME_STATE_CMD_ID:
         {
             memcpy(&game_state, frame + index, sizeof(ext_game_state_t));
-						//EnQueue(&SendBuffer[0], send_game_status(),11);
+						EnQueue(&SendBuffer[0], send_game_status(),11);
         }
         break;
         case GAME_RESULT_CMD_ID:
@@ -95,7 +95,7 @@ void referee_data_solve(uint8_t *frame)
         case GAME_ROBOT_HP_CMD_ID:
         {
             memcpy(&game_robot_HP_t, frame + index, sizeof(ext_game_robot_HP_t));
-						//EnQueue(&SendBuffer[1], send_enemy_information(),11);
+						EnQueue(&SendBuffer[1], send_enemy_information(),11);
         }
         break;
         case FIELD_EVENTS_CMD_ID:
@@ -127,14 +127,14 @@ void referee_data_solve(uint8_t *frame)
         case ROBOT_STATE_CMD_ID:
         {
             memcpy(&robot_state, frame + index, sizeof(robot_state));
-						//EnQueue(&SendBuffer[1], send_bullet_limit(),33);
-						//EnQueue(&SendBuffer[1], send_robot_information(),11);
+						EnQueue(&SendBuffer[1], send_bullet_limit(),33);
+						EnQueue(&SendBuffer[1], send_robot_information(),11);
         }
         break;
         case POWER_HEAT_DATA_CMD_ID:
         {
             memcpy(&power_heat_data_t, frame + index, sizeof(power_heat_data_t));
-						//EnQueue(&SendBuffer[0], send_power_heat_data(),22);
+						EnQueue(&SendBuffer[0], send_power_heat_data(),22);
         }
         break;
         case ROBOT_POS_CMD_ID:
@@ -160,7 +160,7 @@ void referee_data_solve(uint8_t *frame)
         case SHOOT_DATA_CMD_ID:
         {
             memcpy(&shoot_data_t, frame + index, sizeof(shoot_data_t));
-						//EnQueue(&SendBuffer[0], send_bullet_speed(),11);
+						EnQueue(&SendBuffer[0], send_bullet_speed(),11);
         }
         break;
         case BULLET_REMAINING_CMD_ID:

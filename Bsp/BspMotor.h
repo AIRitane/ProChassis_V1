@@ -17,7 +17,7 @@ typedef enum
     YawAllId = 0x1ff,
 	YawMotorId = 0x205
 } YawID;
-//rm motor data
+
 typedef struct
 {
     uint16_t ecd;
@@ -30,6 +30,5 @@ typedef struct
 	fp32 speed;
 } motor_measure_t;
 
-extern void ChassisCMD(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
 
 #endif

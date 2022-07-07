@@ -96,7 +96,6 @@ int main(void)
   MX_TIM5_Init();
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
-  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	sys_int();
   /* USER CODE END 2 */
@@ -185,9 +184,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-	if (htim->Instance == TIM2) {
-    error_counter_Callback();
-  }
+
   /* USER CODE END Callback 1 */
 }
 

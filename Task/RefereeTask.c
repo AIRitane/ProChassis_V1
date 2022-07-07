@@ -147,6 +147,7 @@ void USART1_IRQHandler(void)
     static volatile uint8_t res;
     if(USART1->SR & UART_FLAG_IDLE)
     {
+				ERROR_COUNTER.UART1_REFEREE_Counter++;
         __HAL_UART_CLEAR_PEFLAG(&huart1);
 
         static uint16_t this_time_rx_len = 0;

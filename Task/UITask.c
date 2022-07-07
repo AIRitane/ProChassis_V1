@@ -1,23 +1,13 @@
-#include "RefereeTask.h"
-#include "main.h"
-#include "cmsis_os.h"
-#include "usart.h"
-#include "CRC8_CRC16.h"
-#include "fifo.h"
-#include "bsp_referee.h"
-#include "RefereeBehaviour.h"
-#include "RM_Cilent_UI.h"
-#include "CanReceiveDecom.h"
-#include "ChassisTask.h"
+#include "system.h"
 
-//需要添加UI慢速
-//需要添加底盘停止的UI 
-Graph_Data deng1,kuang,deng2,deng3,deng4,fu,imagex,imagex1,imagex2,imagex3,imagey,imagey1,imagey2,imagey3,imagey4;
-String_Data bullet,bullet3,DAFU,Abuff,Pbuff,Cbuff,state,ZIMIAO,dafustate,zimiaostate,dafustate1,zimiaostate1,state4;
-Float_Data capacityD,Min,Sec;
+
+//增益UI
+String_Data Abuff,Pbuff,Cbuff;
+Float_Data Min,Sec;
+Float_Data BMin,BSec;
 int Time=0,M=10,S=0;
 int BTime=0,BM=10,BS=0;
-Float_Data BMin,BSec;
+
 
 Graph_Data Frame;//自瞄框
 //准星横线
@@ -53,10 +43,7 @@ uint8_t b_rune_flag = 0;
 int s_time_rune;
 int b_time_rune;
 
-extern float CapChageVoltage;
-
-
-void UI(void const * argument)
+void UITask(void const * argument)
 {
 	 while(1)
     {
@@ -97,7 +84,7 @@ void UI(void const * argument)
 				Char_ReFresh(HitRuneStatus);
 				Char_Draw(&AiMBotStatus,"ais",UI_Graph_ADD,1,UI_Color_Cyan,27,2,2,7120,180,"NO");
 				Char_ReFresh(AiMBotStatus);
-				Float_Draw(&CapData,"cad",UI_Graph_ADD,1,UI_Color_Cyan,27,2,5,7120,300,1000*CapChageVoltage);
+				Float_Draw(&CapData,"cad",UI_Graph_ADD,1,UI_Color_Cyan,27,2,5,7120,300,1000*CMS.Electricity);
 				UI_ReFresh(1,CapData);
 				
 				//弹舱盖
@@ -249,14 +236,14 @@ void UI(void const * argument)
 					Char_ReFresh(AiMBotStatus);
 				}
 				
-				if(CapChageVoltage>14)
+				if(CMS.Electricity>14)
 				{
-					Float_Draw(&CapData,"cad",UI_Graph_Change,1,UI_Color_Cyan,27,2,5,7120,300,1000*CapChageVoltage);
+					Float_Draw(&CapData,"cad",UI_Graph_Change,1,UI_Color_Cyan,27,2,5,7120,300,1000*CMS.Electricity);
 					UI_ReFresh(1,CapData);
 				}
 				else
 				{
-					Float_Draw(&CapData,"cad",UI_Graph_Change,1,UI_Color_Pink,27,2,5,7120,300,1000*CapChageVoltage);
+					Float_Draw(&CapData,"cad",UI_Graph_Change,1,UI_Color_Pink,27,2,5,7120,300,1000*CMS.Electricity);
 					UI_ReFresh(1,CapData);
 				}
 				

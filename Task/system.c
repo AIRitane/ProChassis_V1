@@ -1,17 +1,12 @@
 #include "system.h"
 
-//云台数据
-//CMS数据
 void can_filter_init(void);
 void LED_init();
-void error_counter_init();
 
 void sys_int()
 {
-	
 	LED_init();
 	can_filter_init();
-	error_counter_init();
 }
 
 /*-------------------------------------------LED初始化---------------------------------------*/
@@ -22,12 +17,6 @@ void LED_init()
 	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_3);
 	aRGB_led_show(0xffffffff);
-}
-
-/*-------------------------------------ERROR_Counter初始化-----------------------------------*/
-void error_counter_init()
-{
-	HAL_TIM_Base_Start_IT(&htim2);
 }
 
 
@@ -55,12 +44,6 @@ void can_filter_init(void)
     HAL_CAN_ConfigFilter(&hcan2, &can_filter_st);
     HAL_CAN_Start(&hcan2);
     HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
-}
-
-/*-------------------------------------ERROR_Counter回调函数-----------------------------------*/
-void error_counter_Callback()
-{
-	
 }
 
 /*--------------------------------------串口1双缓存DMA初始化-----------------------------------*/

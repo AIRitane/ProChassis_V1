@@ -1,7 +1,5 @@
-/*
-* 本代码主要负责底盘向上位机发送数据整理
-*/
 #include "ChassisSendProtocol.h"
+#include "system.h"
 
 uint8_t *send_power_heat_data(void);
 uint8_t *send_bullet_speed(void);

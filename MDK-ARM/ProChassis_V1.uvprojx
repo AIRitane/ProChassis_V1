@@ -613,6 +613,26 @@
               <FileType>1</FileType>
               <FilePath>..\Task\RefereeTask.c</FilePath>
             </File>
+            <File>
+              <FileName>CanSendTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\CanSendTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>ChassisTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\ChassisTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>UITask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\UITask.c</FilePath>
+            </File>
+            <File>
+              <FileName>ErrorCounterTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\ErrorCounterTask.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -624,9 +644,24 @@
               <FilePath>..\Application\RefereeBehaviour.c</FilePath>
             </File>
             <File>
+              <FileName>ChassisPowerBehaviour.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\ChassisPowerBehaviour.c</FilePath>
+            </File>
+            <File>
+              <FileName>RM_Cilent_UI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\RM_Cilent_UI.c</FilePath>
+            </File>
+            <File>
               <FileName>CanReceiveDecom.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Bsp\CanReceiveDecom.c</FilePath>
+              <FilePath>..\Application\CanReceiveDecom.c</FilePath>
+            </File>
+            <File>
+              <FileName>ErrorCounter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\ErrorCounter.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -643,20 +678,35 @@
               <FileType>1</FileType>
               <FilePath>..\Algorithm\fifo.c</FilePath>
             </File>
+            <File>
+              <FileName>user_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Algorithm\user_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Algorithm\pid.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Bsp</GroupName>
           <Files>
             <File>
-              <FileName>BspMotor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Bsp\BspMotor.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Bsp\bsp_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>ChassisSendProtocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\ChassisSendProtocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>CMS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\CMS.c</FilePath>
             </File>
           </Files>
         </Group>

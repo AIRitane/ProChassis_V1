@@ -5,8 +5,10 @@
 #include "pid.h"
 #include "gpio.h"
 
+#define PI 3.14159265
 #define FallowAngle -144
 #define RotingBaseSpeed 0.64
+
 typedef enum
 {
 	NOFORCE,
@@ -38,9 +40,12 @@ typedef struct
 	pid_type_def WZPid;
 	float Current[4];
 	float WheelSpeed[4];
-	int BukPowerEn;
 }ChassisCtrl_t;
 
 extern ChassisCtrl_t ChassisCtrl;
+extern int16_t power_limit;
+extern int16_t chassis_power;
+extern int16_t robot_level;
+
 void ChassisControlLoop();
 #endif

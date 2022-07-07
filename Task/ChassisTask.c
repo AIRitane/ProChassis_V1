@@ -1,11 +1,5 @@
 #include "ChassisTask.h"
-#include "cmsis_os.h"
-#include "CMSInterface.h"
-#include "BspMotor.h"
-#include "arm_math.h"
-#include "ChassisPowerBehaviour.h"
-#include "math.h"
-#include "user_lib.h"
+#include "system.h"
 
 ChassisCtrl_t ChassisCtrl;
 float XYPid[4][3]={{20000,0,0},
@@ -13,6 +7,12 @@ float XYPid[4][3]={{20000,0,0},
 					{20000,0,0},
 					{20000,0,0}};
 float WZPid[3] = {0.005,0.0000,0};
+
+int16_t power_limit;
+int16_t chassis_power;
+int16_t robot_level;
+
+uint32_t divid = 0;
 
 BufferFunction_t BufferFunctionX;
 BufferFunction_t BufferFunctionY;
@@ -36,9 +36,12 @@ void ChassisTask(void const * argument)
 		ChassisContolSet();
 		ChassisControlLoop();
 		
-		APP_BatteryCombineBuckBoost2();
-		ChassisPowerControl();
-		ChassisCMD(ChassisCtrl.Current[0], ChassisCtrl.Current[1], ChassisCtrl.Current[2], ChassisCtrl.Current[3]);
+		if(CMS.enable == 0) ChassisPowerControl();
+			
+		CMS_Current_Send(ChassisCtrl.Current[0], ChassisCtrl.Current[1], ChassisCtrl.Current[2], ChassisCtrl.Current[3]);
+		
+		divid++;
+		if(divid % 100 ==0) CMS_Referee_Send(power_limit , chassis_power);
 
 		osDelay(1);
 	}
@@ -60,8 +63,21 @@ void ChassisInit()
 	BufferFunctionInit(&BufferFunctionX,100);
 	BufferFunctionInit(&BufferFunctionY,100);
 	BufferFunctionInit(&BufferFunctionWZ,500);
-	ChassisCtrl.BukPowerEn = 1;
+	CMS.enable = 0;
+	
+	power_limit = robot_state.chassis_power_limit;
+	chassis_power = power_heat_data_t.chassis_power;
+	robot_level = robot_state.robot_level;
+	CMS.Electricity = 0;
 }
+
+void ChassisDataLoop()
+{
+	power_limit = robot_state.chassis_power_limit;
+	chassis_power = power_heat_data_t.chassis_power;
+	robot_level = robot_state.robot_level;
+}
+
 void ChassisSetmode()
 {
 	switch(PTZ.ChassisStatueRequest)
@@ -81,12 +97,11 @@ void ChassisSetmode()
 fp32 rote_powkp = 3;
 fp32 roting_speed = RotingBaseSpeed;
 fp32 Erro_angle = 0;
-extern fp32 robot_level;
+float del = 0;
 
 void ChassisContolSet()
 {
-	float del = 0;
-	
+	//得到偏差角度
 	if(power_limit == 60 && ChassisCtrl.Mode == ROTING)
 	{
 		Erro_angle = -6;
@@ -108,16 +123,17 @@ void ChassisContolSet()
 		Erro_angle = 0;
 	}
 	
+	
 	del = FallowAngle - ChassisCtrl.Yaw->angle + Erro_angle;
 	
-
+	//是否有用有待测试
 	BufferFunctionCalc(&BufferFunctionX,PTZ.FBSpeed/32767.f);
 	BufferFunctionCalc(&BufferFunctionY,-PTZ.LRSpeed/32767.f);
 	BufferFunctionX.out = PTZ.FBSpeed/32767.f;
 	BufferFunctionY.out = -PTZ.LRSpeed/32767.f;
 	
-	ChassisCtrl.vx = -BufferFunctionX.out * arm_cos_f32(del/180*PI) + BufferFunctionY.out * arm_sin_f32(del/180*PI);
-	ChassisCtrl.vy = BufferFunctionX.out * arm_sin_f32(del/180*PI) + BufferFunctionY.out * arm_cos_f32(del/180*PI);
+	ChassisCtrl.vx = -BufferFunctionX.out * cos(del/180*PI) + BufferFunctionY.out * sin(del/180*PI);
+	ChassisCtrl.vy = BufferFunctionX.out * sin(del/180*PI) + BufferFunctionY.out * cos(del/180*PI);
 	
 	if(ChassisCtrl.Mode == ROTING)
 	{

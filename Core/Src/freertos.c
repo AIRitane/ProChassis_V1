@@ -50,7 +50,7 @@
 osThreadId defaultTaskHandle;
 osThreadId ChassisHandle;
 osThreadId RefereeHandle;
-osThreadId DataViewHandle;
+osThreadId ErrorCounterHandle;
 osThreadId CanSendHandle;
 osThreadId GUIHandle;
 
@@ -62,7 +62,7 @@ osThreadId GUIHandle;
 void StartDefaultTask(void const * argument);
 void ChassisTask(void const * argument);
 void RefereeTask(void const * argument);
-void DVTask(void const * argument);
+void ErrorCounterTask(void const * argument);
 void CanSendTask(void const * argument);
 void UITask(void const * argument);
 
@@ -123,9 +123,9 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(Referee, RefereeTask, osPriorityNormal, 0, 512);
   RefereeHandle = osThreadCreate(osThread(Referee), NULL);
 
-  /* definition and creation of DataView */
-  osThreadDef(DataView, DVTask, osPriorityNormal, 0, 512);
-  DataViewHandle = osThreadCreate(osThread(DataView), NULL);
+  /* definition and creation of ErrorCounter */
+  osThreadDef(ErrorCounter, ErrorCounterTask, osPriorityNormal, 0, 512);
+  ErrorCounterHandle = osThreadCreate(osThread(ErrorCounter), NULL);
 
   /* definition and creation of CanSend */
   osThreadDef(CanSend, CanSendTask, osPriorityNormal, 0, 512);
@@ -195,22 +195,22 @@ __weak void RefereeTask(void const * argument)
   /* USER CODE END RefereeTask */
 }
 
-/* USER CODE BEGIN Header_DVTask */
+/* USER CODE BEGIN Header_ErrorCounterTask */
 /**
-* @brief Function implementing the DataView thread.
+* @brief Function implementing the ErrorCounter thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_DVTask */
-__weak void DVTask(void const * argument)
+/* USER CODE END Header_ErrorCounterTask */
+__weak void ErrorCounterTask(void const * argument)
 {
-  /* USER CODE BEGIN DVTask */
+  /* USER CODE BEGIN ErrorCounterTask */
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END DVTask */
+  /* USER CODE END ErrorCounterTask */
 }
 
 /* USER CODE BEGIN Header_CanSendTask */
