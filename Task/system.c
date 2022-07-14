@@ -19,7 +19,6 @@ void LED_init()
 	aRGB_led_show(0xffffffff);
 }
 
-
 /*---------------------------------------CANÉ¸Ñ¡Æ÷³õÊ¼»¯-------------------------------------*/
 void can_filter_init(void)
 {

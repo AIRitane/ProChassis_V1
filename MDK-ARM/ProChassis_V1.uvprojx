@@ -708,6 +708,11 @@
               <FileType>1</FileType>
               <FilePath>..\Bsp\CMS.c</FilePath>
             </File>
+            <File>
+              <FileName>vofa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\vofa.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

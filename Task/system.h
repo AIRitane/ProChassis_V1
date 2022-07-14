@@ -20,7 +20,7 @@
 #include "ChassisPowerBehaviour.h"
 #include "RM_Cilent_UI.h"
 #include "ErrorCounter.h"
-
+#include "vofa.h"
 
 
 void sys_int();

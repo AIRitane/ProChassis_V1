@@ -6,20 +6,23 @@
 typedef enum
 {
 	CSMCurrentSendID = 0x210,
-	CSMRefereeSendID = 0x211,
-	CMSRecceiveID = 0x212,
-	
+	CMSRecceiveID = 0x211,
 }CMS_e;
 
 typedef struct
 {
-	uint8_t enable;
+	uint8_t Enable;
+	uint8_t RxOpen;
+	uint16_t Power;
 	int16_t Electricity;
+	int16_t charge_limit;
+	uint8_t TxOpen;
 }CMS_t;
 
 extern CMS_t CMS;
 
-void CMS_Current_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
-void CMS_Referee_Send(int16_t power_limit, int16_t chassis_power);
+void Motor_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
+void CMS_Referee_Send(uint16_t charge_limit, uint8_t enable);
+void CMS_STATUS();
 
 #endif

@@ -1,6 +1,14 @@
 #include "ErrorCounterTask.h"
 #include "system.h"
 
+/*
+ * 监控通信是否离线，可以根据需要动态拓展
+ * CMS离线 红灯一秒一次
+ * 云台通信离线 红灯一秒两次
+ * 裁判系统离线 红灯一秒闪三次
+ * 电机离线 ID为n,蓝灯按照一秒闪烁n次
+ * 正常 白灯一秒一次
+ */
 void ErrorCounterTask(void const * argument)
 {
 	ErrorCounterInit();

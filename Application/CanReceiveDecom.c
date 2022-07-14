@@ -32,8 +32,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 		{
 			case CMSRecceiveID:
 				ERROR_COUNTER.CAN_CMS_Counter++;
-				CMS.enable = rx_data[0];
-				CMS.Electricity = (int16_t)rx_data[1]<<8|rx_data[2];
+				CMS.Enable = rx_data[0];
+				CMS.RxOpen = rx_data[1];
+				CMS.Power = (int16_t)rx_data[2]<<8|rx_data[3];
+				CMS.Electricity = (int16_t)rx_data[4]<<8|rx_data[5];
 				break;
 			case CanMotor1Id:
 			case CanMotor2Id:

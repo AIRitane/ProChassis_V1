@@ -6,7 +6,7 @@
 #include "gpio.h"
 
 #define PI 3.14159265
-#define FallowAngle -144
+#define FallowAngle 18.6131134
 #define RotingBaseSpeed 0.64
 
 typedef enum
@@ -14,7 +14,8 @@ typedef enum
 	NOFORCE,
 	STOP,
 	FALLOW,
-	ROTING
+	ROTING,
+	SLOW
 }ChassisMode_e;
 
 
@@ -44,8 +45,8 @@ typedef struct
 
 extern ChassisCtrl_t ChassisCtrl;
 extern int16_t power_limit;
-extern int16_t chassis_power;
-extern int16_t robot_level;
+extern uint32_t CMS_COUNTER;
+extern uint32_t LAST_CMS_COUNTER;
 
 void ChassisControlLoop();
 #endif

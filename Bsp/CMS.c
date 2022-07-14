@@ -6,10 +6,14 @@ CMS_t CMS;
 static CAN_TxHeaderTypeDef  can_tx_message[2];
 static uint8_t              can_send_data[2][8];
 
-void CMS_Current_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
+void CMS_STATUS()
+{
+	if(CMS.Electricity < 1100 || CMS.Enable == 0) CMS.RxOpen = 0; 
+}
+void Motor_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
 {
     uint32_t send_mail_box;
-    can_tx_message[0].StdId = CSMCurrentSendID;
+    can_tx_message[0].StdId = ChassisAllId;
     can_tx_message[0].IDE = CAN_ID_STD;
     can_tx_message[0].RTR = CAN_RTR_DATA;
     can_tx_message[0].DLC = 0x08;
@@ -25,16 +29,15 @@ void CMS_Current_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t mo
     HAL_CAN_AddTxMessage(&hcan1, &can_tx_message[0], can_send_data[0], &send_mail_box);
 }
 
-void CMS_Referee_Send(int16_t power_limit, int16_t chassis_power)
+void CMS_Referee_Send(uint16_t charge_limit, uint8_t enable)
 {
 		uint32_t send_mail_box;
     can_tx_message[1].StdId = CSMCurrentSendID;
     can_tx_message[1].IDE = CAN_ID_STD;
     can_tx_message[1].RTR = CAN_RTR_DATA;
-    can_tx_message[1].DLC = 0x04;
-    can_send_data[1][0] = power_limit >> 8;
-    can_send_data[1][1] = power_limit;
-    can_send_data[1][2] = chassis_power >> 8;
-    can_send_data[1][3] = chassis_power;
+    can_tx_message[1].DLC = 0x03;
+    can_send_data[1][0] = charge_limit >> 8;
+    can_send_data[1][1] = charge_limit;
+    can_send_data[1][2] = enable;
     HAL_CAN_AddTxMessage(&hcan1, &can_tx_message[1], can_send_data[1], &send_mail_box);
 }

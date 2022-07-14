@@ -1,24 +1,13 @@
-/*************************************************************
-
-RM自定义UI协议       基于RM2020学生串口通信协议V1.1
-
-山东理工大学 齐奇战队 东东@Rjgawuie
-
-**************************************************************/
-
-
 #include "RM_Cilent_UI.h"
 #include "main.h"
 #include "RefereeBehaviour.h"
+#include "system.h"
 unsigned char UI_Seq;                      //包序号
 
 /****************************************串口驱动映射************************************/
 void UI_SendByte(unsigned char ch)
 {
-   //USART_SendData(USART6,ch);
-   HAL_UART_Transmit(&huart6,&ch,1,0xF);
-  // while((USART6->SR & 0x4) == RESET);
-   //while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);	
+	 HAL_UART_Transmit(&huart1,&ch,1,0xfff);
 }
 
 /********************************************删除操作*************************************
