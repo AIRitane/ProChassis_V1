@@ -5,6 +5,8 @@ void LED_init();
 
 void sys_int()
 {
+	QueueInit(&SendBuffer[0]);
+	QueueInit(&SendBuffer[1]);
 	LED_init();
 	can_filter_init();
 }

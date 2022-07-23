@@ -14,6 +14,7 @@ void ErrorCounterTask(void const * argument)
 	ErrorCounterInit();
 	while(1)
 	{
+		//printf("%f,%f,%f\n",chassis_power_buffer,chassis_power,CMS.Electricity/100.0f);
 		CAN_CMS_Error();
 		CAN_GIMBLE_Error();
 		UART1_REFEREE_Error();
@@ -48,7 +49,7 @@ void ErrorCounterTask(void const * argument)
 				ErrorLED(0x00ff00,1);
 				break;
 			default:
-				osDelay(1);
+				osDelay(4);
 				break;
 		}
 	}

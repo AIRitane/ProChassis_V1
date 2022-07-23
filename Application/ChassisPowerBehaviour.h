@@ -6,6 +6,7 @@
 extern fp32 chassis_power_buffer;
 extern fp32 chassis_power;
 extern fp32 total_power;
+
 void ChassisPowerControl();
 
 #endif

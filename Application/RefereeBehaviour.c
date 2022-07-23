@@ -4,8 +4,6 @@
 */
 #include "RefereeBehaviour.h"
 #include "system.h"
-#include "CRC8_CRC16.h"
-
 
 Queue_t SendBuffer[2];
 
@@ -194,7 +192,7 @@ void QueueInit(Queue_t *q)
     q->front = 0;
     q->rear = -1;
     q->counter = 0;
-}
+} 
 
 
 uint8_t IsFull(Queue_t *q)
@@ -209,6 +207,8 @@ void EnQueue(Queue_t *q, uint8_t *val,uint8_t lenth)
 	uint8_t i = 0;
     if(IsFull(q))
         return;
+		if(q->counter > (SIZE - 11))
+			return;
 	
 	for(;i<lenth;i++)
 	{
@@ -238,8 +238,8 @@ int Pop(Queue_t *buffer1,Queue_t *buffer2,uint8_t data[11])
 		{
 			for(;i<11;i++)
 			{
-				buffer2->front = (buffer2->front + 1) % SIZE;
 				data[i] = buffer2->arr[buffer2->front];
+				buffer2->front = (buffer2->front + 1) % SIZE;
 				buffer2->counter--;
 			}
 		}
@@ -253,8 +253,8 @@ int Pop(Queue_t *buffer1,Queue_t *buffer2,uint8_t data[11])
 	{
 		for(;i<11;i++)
 			{
-				buffer1->front = (buffer1->front + 1) % SIZE;
 				data[i] = buffer1->arr[buffer1->front];
+				buffer1->front = (buffer1->front + 1) % SIZE;
 				buffer1->counter--;
 			}
 	}

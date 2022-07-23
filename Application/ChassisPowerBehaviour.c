@@ -44,9 +44,9 @@ void ChassisReduceRate()
 	}
 	
 	//电容充电功率
-	CMS.charge_limit = (real_power_limit - CMS.Power/100)*100;
-	if(CMS.Power/100.0f/real_power_limit > 0.6) CMS.charge_limit = 0;
-	if(CMS.RxOpen == 1) CMS.charge_limit = (robot_state.chassis_power_limit - 3)*100;
+	CMS.charge_limit = (real_power_limit - chassis_power)*100;
+	if(chassis_power/real_power_limit > 0.8||chassis_power_buffer < 40) CMS.charge_limit = 0;
+	if(CMS.RxOpen == 1) CMS.charge_limit = (robot_state.chassis_power_limit - 10)*100;
 	if(CMS.charge_limit < 0) CMS.charge_limit = 0;
 	
 	//计算减幅系数

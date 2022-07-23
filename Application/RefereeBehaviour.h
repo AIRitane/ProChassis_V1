@@ -2,8 +2,11 @@
 #define REFEREE_BEHAVIOUER_H
 
 #include "struct_typedef.h"
+#include "stm32f4xx_hal.h"
 
-/*------------------------------------------裁判系统数据包参数---------------------------------------*/
+#define SEND_BUS hcan1
+#define SIZE 517
+
 #define HEADER_SOF 0xA5
 #define REF_PROTOCOL_FRAME_MAX_SIZE         128
 
@@ -43,6 +46,7 @@ typedef enum
 	CLIENT_SIDE_MAP_RC_INFORMATION		= 0x0305,//客户端小地图接收信息
     IDCustomData,
 }referee_cmd_id_t;
+
 typedef  struct
 {
   uint8_t SOF;
@@ -72,16 +76,11 @@ typedef struct
 
 #pragma pack(pop)
 
-/*------------------------------------------裁判系统解包参数---------------------------------------*/
-
-#define SEND_BUS hcan1
-#define SIZE 512
-
 typedef struct
 {
     uint8_t arr[SIZE];
     uint32_t front;
-    uint32_t rear;
+    int32_t rear;
     uint32_t counter;
 
 }Queue_t;
@@ -289,7 +288,6 @@ typedef __PACKED_STRUCT
 {
     uint8_t data[32];
 } ext_download_stream_data_t;
-
 
 extern frame_header_struct_t referee_receive_header;
 extern frame_header_struct_t referee_send_header;

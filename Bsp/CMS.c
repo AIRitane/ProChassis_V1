@@ -6,9 +6,20 @@ CMS_t CMS;
 static CAN_TxHeaderTypeDef  can_tx_message[2];
 static uint8_t              can_send_data[2][8];
 
+uint32_t cms_count = 0;
 void CMS_STATUS()
 {
-	if(CMS.Electricity < 1100 || CMS.Enable == 0) CMS.RxOpen = 0; 
+	
+	if(CMS.Electricity < 1200 || CMS.Enable == 0)
+	{
+		cms_count++;
+	}
+	else 
+		cms_count = 0;
+	if(cms_count > 200)
+	{
+		CMS.RxOpen = 0; 
+	}
 }
 void Motor_Send(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
 {
